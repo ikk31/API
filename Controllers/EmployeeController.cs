@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult>
            GetEmployees()
         {
-            var obj = await _context.Employee.ToListAsync();
+            var obj = await _context.Employee.Include(x => x.IdJobTitleNavigation).ToListAsync();
             return Ok(obj.Adapt<List<AllEmployees>>());
         }
 
@@ -86,7 +86,7 @@ namespace WebApplication1.Controllers
             obj.PhotoPath = addEmployees.PhotoPath;
             obj.HireDate = addEmployees.HireDate;
             obj.LastName = addEmployees.LastName;
-           obj.IdJobTittle = addEmployees.IdJobTittle;
+           obj.IdJobTitle = addEmployees.IdJobTitle;
             try
             {
                 await _context.SaveChangesAsync();
@@ -97,6 +97,20 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, ex.Message);
             }
 
+
+        }
+
+        [HttpGet("GetThisEmployee/{idEmployee}")]
+        public async Task<IActionResult>
+            GetThisEmployee(int idEmployee)
+        {
+            var obj = await _context.Employee.Include(x => x.IdJobTitleNavigation).FirstOrDefaultAsync(x => x.IdEmployee == idEmployee);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(obj.Adapt<ThisEmployee>());
 
         }
 

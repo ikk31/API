@@ -27,7 +27,7 @@ namespace WebApplication1
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.Urls.Add("https://192.168.0.167:7106/");
+            //app.Urls.Add("https://192.168.0.158:7106/");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

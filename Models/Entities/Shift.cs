@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApplication1.Models.Entities;
 
 namespace API.Models.Entities;
 
@@ -15,9 +16,9 @@ public partial class Shift
 
     public DateOnly? Date { get; set; }
 
-    public DateOnly? StartTime { get; set; }
+    public TimeSpan? StartTime { get; set; }
 
-    public DateOnly? EndTime { get; set; }
+    public TimeSpan? EndTime { get; set; }
 
     public int? BreakDuration { get; set; }
 
@@ -25,7 +26,7 @@ public partial class Shift
 
     public int? HourlyRate { get; set; }
 
-    public int? TotalEarned { get; set; }
+    public decimal? TotalEarned { get; set; }
 
     [ForeignKey(nameof(IdWorkplaceNavigation))]
     public int? IdWorkplace { get; set; }
@@ -34,9 +35,11 @@ public partial class Shift
 
     public double? WorkHours { get; set; }
 
+
     public virtual Employee? IdEmployeeNavigation { get; set; }
 
     public virtual WorkPlace? IdWorkplaceNavigation { get; set; }
 
+    public virtual ICollection<ShiftPayout> ShiftPayouts { get; set; } = new List<ShiftPayout>();
     public virtual ICollection<List> Lists { get; set; } = new List<List>();
 }

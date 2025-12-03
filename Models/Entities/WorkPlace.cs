@@ -8,12 +8,12 @@ namespace API.Models.Entities;
 public partial class WorkPlace
 {
     [Key]
-    public int IdWorkplace { get; set; }
+    public int IdWorkPlace { get; set; }
 
     public string? Name { get; set; }
 
     [ForeignKey(nameof(Cities))]
-    public int? idCity { get; set; }
+    public int? IdCity { get; set; }
 
     public virtual Cities? Cities { get; set; }
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();

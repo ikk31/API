@@ -13,8 +13,8 @@ public partial class Employee
 
     public DateOnly? HireDate { get; set; }
 
-    [ForeignKey(nameof(IdJobTittleNavigation))]
-    public int? IdJobTittle { get; set; }
+    [ForeignKey(nameof(IdJobTitleNavigation))]
+    public int? IdJobTitle { get; set; }
 
     public bool? IsDelete { get; set; }
 
@@ -23,7 +23,7 @@ public partial class Employee
 
     public string? PhotoPath { get; set; }
 
-    public virtual JobTittle? IdJobTittleNavigation { get; set; }
+    public virtual JobTitle? IdJobTitleNavigation { get; set; }
 
     public virtual ICollection<Avans> Avans { get; set; } = new List<Avans>();
 

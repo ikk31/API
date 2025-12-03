@@ -21,5 +21,5 @@ public partial class EmployeeHistorySalary
 
     public string? Reason { get; set; }
 
-    public virtual JobTittle? IdJobTittleNavigation { get; set; }
+    public virtual JobTitle? IdJobTittleNavigation { get; set; }
 }

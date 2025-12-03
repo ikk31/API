@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Models.Entities;
 
-public partial class JobTittle
+public partial class JobTitle
 {
     public string? Name { get; set; }
 
     public double? BaseRate { get; set; }
 
     [Key]
-    public int IdJobTittle { get; set; }
+    public int IdJobTitle { get; set; }
 
     public virtual ICollection<EmployeeHistorySalary> EmployeeHistorySalaries { get; set; } = new List<EmployeeHistorySalary>();
 

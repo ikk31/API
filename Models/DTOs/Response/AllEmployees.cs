@@ -7,5 +7,7 @@
         public string? LastName { get; set; }
         public string? PhotoPath { get; set; }
         public bool? IsDelete {  get; set; }
+
+      
     }
 }
