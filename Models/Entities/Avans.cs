@@ -7,18 +7,20 @@ namespace API.Models.Entities
     public partial class Avans
     {
         [Key]
-        public int idAvans {  get; set; }
+        public int IdAvans {  get; set; }
 
-        [ForeignKey(nameof(Employee))]
-        public int? IdEmployee { get; set; }
+        [ForeignKey(nameof(IdEmployeeNavigation))]
+        public int IdEmployee { get; set; }
 
-        public int? Amount { get; set; }
+        public decimal? Amount { get; set; }
 
-        public DateOnly? date { get; set; }
+        public DateOnly? Date { get; set; }
+
+        public bool? IsDelete { get; set; }
 
         public virtual Employee? IdEmployeeNavigation { get; set; }
 
-        public virtual ICollection<AvansPayout> AvansPayouts { get; set; } = new List<AvansPayout>();
+        public virtual ICollection<AvansPayouts> AvansPayouts { get; set; } = new List<AvansPayouts>();
 
 
     }

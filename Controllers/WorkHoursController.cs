@@ -1,5 +1,6 @@
 ﻿using API.Models.Entities;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
@@ -9,6 +10,7 @@ using WebApplication1.Models.DTOs.Response;
 namespace WebApplication1.Controllers
 {
     [Route("api/[Controller]")]
+    [Authorize(Roles ="1")]
     public class WorkHoursController : ControllerBase
     {
         private readonly MyCoffeeCupContext _context;
@@ -17,8 +19,9 @@ namespace WebApplication1.Controllers
         {
             _context = context;
         }
-
+        
         [HttpGet("AllShifts")]
+        [Authorize(Roles = "1")]
         public async Task<IActionResult>
             GetAllShifts()
         {
@@ -93,6 +96,29 @@ namespace WebApplication1.Controllers
             {
                 await _context.SaveChangesAsync();
                 return Ok("Информация о смене успешно изменена");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+
+        }
+
+        [HttpDelete("DeleteShift/{IdShift}")]
+        public async Task<IActionResult>
+            DeleteEmployee(int IdShift)
+        {
+            var obj = await _context.Shift.FindAsync(IdShift);
+            if (obj == null)
+            {
+                return NotFound("Смена не найдена");
+            }
+            obj.IsDelete = true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok("Смена успешно удалёна");
             }
             catch (Exception ex)
             {

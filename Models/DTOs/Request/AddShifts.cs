@@ -16,6 +16,7 @@ namespace WebApplication1.Models.DTOs.Request
 
         public decimal? TotalEarned { get; set; }
         public double? WorkHours { get; set; }
+        public bool? IsDelete { get; set; }
 
     }
 

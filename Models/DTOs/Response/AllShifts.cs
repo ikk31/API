@@ -20,6 +20,7 @@
         public EmployeeDto? IdEmployeeNavigation { get; set; }
 
         public string? Notes { get; set; }
+        public bool? IsDelete { get; set; }
     }
 
     public class EmployeeDto

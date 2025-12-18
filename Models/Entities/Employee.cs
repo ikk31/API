@@ -27,7 +27,7 @@ public partial class Employee
 
     public virtual ICollection<Avans> Avans { get; set; } = new List<Avans>();
 
-    public virtual ICollection<Payout> Payouts { get; set; } = new List<Payout>();
+    public virtual ICollection<Payouts> Payouts { get; set; } = new List<Payouts>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
 }

@@ -68,8 +68,6 @@ namespace WebApplication1.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-           
-            
         }
 
         [HttpPut("PutEmployee/{IdEmployee}")]

@@ -28,9 +28,9 @@ public partial class MyCoffeeCupContext : DbContext
 
     public DbSet<List> List { get; set; }
 
-    public DbSet<PayRollPeriod> PayRollPeriod { get; set; }
+    
 
-    public DbSet<Payout> Payout { get; set; }
+    public DbSet<Payouts> Payouts { get; set; }
 
     public DbSet<Role> Role { get; set; }
 
@@ -41,8 +41,8 @@ public partial class MyCoffeeCupContext : DbContext
     public DbSet<User> User { get; set; }
 
     public DbSet<WorkPlace> WorkPlace { get; set; }
-    public DbSet<ShiftPayout> ShiftPayout { get; set; }
-    public DbSet<AvansPayout> AvansPayout { get; set; }
+    public DbSet<ShiftPayouts> ShiftPayout { get; set; }
+    public DbSet<AvansPayouts> AvansPayout { get; set; }
 
 
 
@@ -52,15 +52,14 @@ public partial class MyCoffeeCupContext : DbContext
 
         // Автоинкремент для основных таблиц
         modelBuilder.Entity<Employee>().Property(x => x.IdEmployee).ValueGeneratedOnAdd();
-        modelBuilder.Entity<Avans>().Property(x => x.idAvans).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Avans>().Property(x => x.IdAvans).ValueGeneratedOnAdd();
         modelBuilder.Entity<Category>().Property(x => x.IdCategory).ValueGeneratedOnAdd();
         modelBuilder.Entity<CategoryDrink>().Property(x => x.IdCarDrink).ValueGeneratedOnAdd();
         modelBuilder.Entity<Cities>().Property(x => x.IdCity).ValueGeneratedOnAdd();
         modelBuilder.Entity<EmployeeHistorySalary>().Property(x => x.IdHistorySalary).ValueGeneratedOnAdd();
         modelBuilder.Entity<JobTitle>().Property(x => x.IdJobTitle).ValueGeneratedOnAdd();
         modelBuilder.Entity<List>().Property(x => x.IdList).ValueGeneratedOnAdd();
-        modelBuilder.Entity<Payout>().Property(x => x.IdPayouts).ValueGeneratedOnAdd();
-        modelBuilder.Entity<PayRollPeriod>().Property(x => x.IdPayPeriod).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Payouts>().Property(x => x.IdPayouts).ValueGeneratedOnAdd();
         modelBuilder.Entity<Role>().Property(x => x.IdRole).ValueGeneratedOnAdd();
         modelBuilder.Entity<Shift>().Property(x => x.IdShifts).ValueGeneratedOnAdd();
         modelBuilder.Entity<TechnicalMap>().Property(x => x.IdTech).ValueGeneratedOnAdd();
@@ -70,41 +69,41 @@ public partial class MyCoffeeCupContext : DbContext
         // ============ НАСТРОЙКИ ДЛЯ ТАБЛИЦ СВЯЗИ ============
 
         // 1. ShiftPayout (связь смен и выплат)
-        modelBuilder.Entity<ShiftPayout>()
-            .HasKey(sp => new { sp.IdShift, sp.IdPayout }); // Составной ключ
+        modelBuilder.Entity<ShiftPayouts>()
+            .HasKey(sp => new { sp.IdShift, sp.IdPayouts }); // Составной ключ
 
-        modelBuilder.Entity<ShiftPayout>()
+        modelBuilder.Entity<ShiftPayouts>()
             .HasOne(sp => sp.Shift)
             .WithMany(s => s.ShiftPayouts)
             .HasForeignKey(sp => sp.IdShift)
             .OnDelete(DeleteBehavior.Cascade); // Каскадное удаление
 
-        modelBuilder.Entity<ShiftPayout>()
-            .HasOne(sp => sp.Payout)
+        modelBuilder.Entity<ShiftPayouts>()
+            .HasOne(sp => sp.Payouts)
             .WithMany(p => p.ShiftPayouts)
-            .HasForeignKey(sp => sp.IdPayout)
+            .HasForeignKey(sp => sp.IdPayouts)
             .OnDelete(DeleteBehavior.Cascade); // Каскадное удаление
 
         // 2. AvansPayout (связь авансов и выплат)
-        modelBuilder.Entity<AvansPayout>()
-            .HasKey(ap => new { ap.IdAvans, ap.IdPayout }); // Составной ключ
+        modelBuilder.Entity<AvansPayouts>()
+            .HasKey(ap => new { ap.IdAvans, ap.IdPayouts }); // Составной ключ
 
-        modelBuilder.Entity<AvansPayout>()
+        modelBuilder.Entity<AvansPayouts>()
             .HasOne(ap => ap.Avans)
             .WithMany(a => a.AvansPayouts)
             .HasForeignKey(ap => ap.IdAvans)
             .OnDelete(DeleteBehavior.Cascade); // Каскадное удаление
 
-        modelBuilder.Entity<AvansPayout>()
-            .HasOne(ap => ap.Payout)
+        modelBuilder.Entity<AvansPayouts>()
+            .HasOne(ap => ap.Payouts)
             .WithMany(p => p.AvansPayouts)
-            .HasForeignKey(ap => ap.IdPayout)
+            .HasForeignKey(ap => ap.IdPayouts)
             .OnDelete(DeleteBehavior.Cascade); // Каскадное удаление
 
         // ============ НАСТРОЙКИ ДЛЯ СУЩЕСТВУЮЩИХ ТАБЛИЦ ============
 
         // Связи для Payout
-        modelBuilder.Entity<Payout>()
+        modelBuilder.Entity<Payouts>()
             .HasOne(p => p.IdEmployeeNavigation)
             .WithMany(e => e.Payouts)
             .HasForeignKey(p => p.IdEmployee)
@@ -129,14 +128,15 @@ public partial class MyCoffeeCupContext : DbContext
             .WithMany(e => e.Avans)
             .HasForeignKey(a => a.IdEmployee)
             .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Avans>().Property(x => x.IdAvans).ValueGeneratedOnAdd();
 
         // Уникальные индексы (если нужны)
-        modelBuilder.Entity<ShiftPayout>()
-            .HasIndex(sp => new { sp.IdShift, sp.IdPayout })
+        modelBuilder.Entity<ShiftPayouts>()
+            .HasIndex(sp => new { sp.IdShift, sp.IdPayouts })
             .IsUnique(); // Гарантируем уникальность связи
 
-        modelBuilder.Entity<AvansPayout>()
-            .HasIndex(ap => new { ap.IdAvans, ap.IdPayout })
+        modelBuilder.Entity<AvansPayouts>()
+            .HasIndex(ap => new { ap.IdAvans, ap.IdPayouts })
             .IsUnique(); // Гарантируем уникальность связи
 
         // Настройка для List (если есть связь с Shift)

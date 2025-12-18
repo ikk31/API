@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebApplication1.Models.Entities
 {
     [Table("ShiftPayout")]
-    public class ShiftPayout
+    public class ShiftPayouts
     {
         [Key]
         [Column(Order = 1)]
@@ -14,10 +14,10 @@ namespace WebApplication1.Models.Entities
 
         [Key]
         [Column(Order = 2)]
-        [ForeignKey(nameof(Payout))]
-        public int IdPayout { get; set; }
+        [ForeignKey(nameof(Payouts))]
+        public int IdPayouts { get; set; }
 
         public virtual Shift? Shift { get; set; }
-        public virtual Payout? Payout { get; set; }
+        public virtual Payouts? Payouts { get; set; }
     }
 }

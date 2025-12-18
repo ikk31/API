@@ -35,11 +35,12 @@ public partial class Shift
 
     public double? WorkHours { get; set; }
 
+    public bool? IsDelete { get; set; }
 
     public virtual Employee? IdEmployeeNavigation { get; set; }
 
     public virtual WorkPlace? IdWorkplaceNavigation { get; set; }
 
-    public virtual ICollection<ShiftPayout> ShiftPayouts { get; set; } = new List<ShiftPayout>();
+    public virtual ICollection<ShiftPayouts> ShiftPayouts { get; set; } = new List<ShiftPayouts>();
     public virtual ICollection<List> Lists { get; set; } = new List<List>();
 }
